@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appBaseName": {
+            "type": "string"
+        },
+        "ReadifyApplicationApiKey": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiFunctionAppName": "[concat(parameters('appBaseName'), '-api')]",
+        "apiFunctionAppServicePlanName": "[concat(variables('apiFunctionAppName'), '-sp')]",
+        "storageAccountName": "[toLower(replace(parameters('appBaseName'),'-',''))]",
+        "apiFunctionAppInsightsName": "[variables('apiFunctionAppName')]"
+    },
+    "resources": [{
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2018-02-01",
+            "kind": "StorageV2",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "properties": {
+                "supportsHttpsTrafficOnly": true
+            }
+        },
+        {
+            "name": "[variables('apiFunctionAppServicePlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-09-01",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic"
+            },
+            "properties": {
+                "name": "[variables('apiFunctionAppServicePlanName')]"
+            }
+        },
+        {
+            "name": "[variables('apiFunctionAppInsightsName')]",
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2015-05-01",
+            "location": "West US 2",
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web"
+            }
+        },
+        {
+            "name": "[variables('apiFunctionAppName')]",
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2015-08-01",
+            "location": "[resourceGroup().location]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('apiFunctionAppServicePlanName'))]",
+                "[resourceId('Microsoft.Insights/components', variables('apiFunctionAppInsightsName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+            ],
+            "tags": {
+                "displayName": "Azure Functions"
+            },
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('apiFunctionAppServicePlanName'))]",
+                "name": "[variables('apiFunctionAppName')]"
+            },
+            "resources": [{
+                "apiVersion": "2015-08-01",
+                "type": "config",
+                "name": "appsettings",
+                "location": "[resourceGroup().location]",
+                "dependsOn": [
+                    "[concat('Microsoft.Web/sites/', variables('apiFunctionAppName'))]"
+                ],
+                "tags": {
+                    "displayName": "Web App Settings"
+                },
+                "properties": {
+                    "FUNCTIONS_EXTENSION_VERSION": "beta",
+                    "WEBSITE_CONTENTSHARE": "[toLower(variables('apiFunctionAppName'))]",
+                    "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2016-01-01').keys[0].value)]",
+                    "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2016-01-01').keys[0].value)]",
+                    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2016-01-01').keys[0].value)]",
+                    "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('apiFunctionAppInsightsName')), '2014-04-01').InstrumentationKey]",
+                    "ReadifyApplicationApiKey": "[parameters('ReadifyApplicationApiKey')]"
+                }
+            }]
+        }
+    ]
+}
