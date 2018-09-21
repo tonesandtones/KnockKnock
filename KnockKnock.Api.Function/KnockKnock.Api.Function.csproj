@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="functionmonkey" Version="0.13.0-beta000" />
-    <PackageReference Include="functionmonkey.compiler" Version="0.13.2-beta000" />
     <PackageReference Include="microsoft.net.sdk.functions" Version="1.0.22" />
   </ItemGroup>
 
