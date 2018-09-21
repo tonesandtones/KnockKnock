@@ -13,7 +13,9 @@ namespace KnockKnockApi.CommandHandlers
         {
             var input = command.Input;
 
-            Regex regex = new Regex(@"(\s+)");
+            //including a capturing group in the split regex causes the Regex#Split()
+            //operation to keep the captured group in the output array
+            var regex = new Regex(@"(\s+)");
             var parts = regex.Split(input);
             for (var i = 0; i < parts.Length; i++)
             {
@@ -28,7 +30,7 @@ namespace KnockKnockApi.CommandHandlers
                 }
             }
 
-            return String.Join(string.Empty, parts);
+            return string.Join(string.Empty, parts);
         }
     }
 }
