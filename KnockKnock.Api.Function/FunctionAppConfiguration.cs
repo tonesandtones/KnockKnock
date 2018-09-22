@@ -1,8 +1,12 @@
 using System.Net.Http;
+using FluentValidation;
 using FunctionMonkey.Abstractions;
 using FunctionMonkey.Abstractions.Builders;
+using FunctionMonkey.FluentValidation;
 using KnockKnockApi.CommandHandlers;
 using KnockKnockApi.Commands;
+using KnockKnockApi.Validators;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KnockKnock.Api.Function
 {
@@ -17,12 +21,17 @@ namespace KnockKnock.Api.Function
 
 #if SUPPORTS_BIGINTEGER
                     commands.Register<FibonacciCommandHandler>();
+                    services.AddTransient<IValidator<FibonacciCommand>, FibonacciCommandValidator>();
 #else
                     commands.Register<FibUlongCommandHandler>();
+                    services.AddTransient<IValidator<FibUlongCommand>, FibUlongCommandValidator>();
 #endif
                     commands.Register<ReverseWordsCommandHandler>();
+                    services.AddTransient<IValidator<ReverseWordsCommand>, ReverseWordsCommandValidator>();
+                    
                     commands.Register<TriangleTypeCommandHandler>();
                 })
+                .AddFluentValidation()
                 .Authorization(auth => auth.AuthorizationDefault(AuthorizationTypeEnum.Anonymous))
                 .Functions(functions => functions
                     .HttpRoute("/api/Fibonacci", 
@@ -34,7 +43,6 @@ namespace KnockKnock.Api.Function
                     )
                     .HttpRoute("/api/TriangleType", route => route.HttpFunction<TriangleTypeCommand>(HttpMethod.Get))
                     .HttpRoute("/api/ReverseWords", route => route.HttpFunction<ReverseWordsCommand>(HttpMethod.Get))
-                
                 )
                 .OpenApiEndpoint(openapi =>
                     openapi

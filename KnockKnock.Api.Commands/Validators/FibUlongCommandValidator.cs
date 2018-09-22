@@ -8,7 +8,7 @@ namespace KnockKnockApi.Validators
     {
         public FibUlongCommandValidator()
         {
-            RuleFor(x => x.N).InclusiveBetween(1, 50);
+            RuleFor(x => x.N).InclusiveBetween(1, 93);
         }
     }
 #endif

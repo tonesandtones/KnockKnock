@@ -26,8 +26,8 @@ namespace KnockKnock.Api.Commands.Tests
                 new object[] {1, true},
                 new object[] {2, true},
                 new object[] {50, true},
-                new object[] {1000, false},
-                new object[] {1001, false}, //arbitrary cutoff at 1000
+                new object[] {93, true},
+                new object[] {94, false}, //ulong tops out at f(93). f(94) will overflow
                 new object[] {9999, false},
                 new object[] {int.MaxValue, false},
                 new object[] {int.MinValue, false},
