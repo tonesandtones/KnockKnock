@@ -5,7 +5,7 @@
         "appBaseName": {
             "value": "knockknock-tones"
         },
-        "ReadifyApplicationApiKey": {
+        "ApplicationApiKey": {
             "value": ""
         }
     }

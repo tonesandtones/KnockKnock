@@ -5,7 +5,7 @@
         "appBaseName": {
             "type": "string"
         },
-        "ReadifyApplicationApiKey": {
+        "ApplicationApiKey": {
             "type": "string"
         }
     },
@@ -87,7 +87,7 @@
                     "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2016-01-01').keys[0].value)]",
                     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2016-01-01').keys[0].value)]",
                     "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('apiFunctionAppInsightsName')), '2014-04-01').InstrumentationKey]",
-                    "ReadifyApplicationApiKey": "[parameters('ReadifyApplicationApiKey')]"
+                    "ApiKey": "[parameters('ApplicationApiKey')]"
                 }
             }]
         }
