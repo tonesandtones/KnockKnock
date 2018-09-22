@@ -1,10 +1,11 @@
-using System.Numerics;
-using System.Threading.Tasks;
-using AzureFromTheTrenches.Commanding.Abstractions;
-using KnockKnockApi.Commands;
-
 namespace KnockKnockApi.CommandHandlers
 {
+#if (SUPPORTS_BIGINTEGER)
+    using System.Numerics;
+    using System.Threading.Tasks;
+    using AzureFromTheTrenches.Commanding.Abstractions;
+    using KnockKnockApi.Commands;
+
     public class FibonacciCommandHandler : ICommandHandler<FibonacciCommand, BigInteger>
     {
         private async Task<BigInteger> FibSlowRecusion(int n)
@@ -25,7 +26,7 @@ namespace KnockKnockApi.CommandHandlers
         {
             var n = command.N;
             return FibFastLoop(n);
-            
+
             //yeah.... don't use this one, but it's implemented as a reference.
 //            return await FibSlowRecusion(n);
         }
@@ -55,4 +56,6 @@ namespace KnockKnockApi.CommandHandlers
             }
         }
     }
+
+#endif
 }

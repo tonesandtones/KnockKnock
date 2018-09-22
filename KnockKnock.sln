@@ -9,6 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnockKnock.Api.Commands", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnockKnock.Api.Commands.Tests", "KnockKnock.Api.Commands.Tests\KnockKnock.Api.Commands.Tests.csproj", "{5BD015B4-9C4C-42BC-8165-88217AC7B822}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{32C2C153-3C82-41E2-BB13-6308D56C5610}"
+ProjectSection(SolutionItems) = preProject
+	deploy\arm-template.json = deploy\arm-template.json
+	deploy\parameters.json = deploy\parameters.json
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionDefines", "SolutionDefines", "{0BFA194F-D08E-4724-BD40-6F033E9B6C83}"
+ProjectSection(SolutionItems) = preProject
+	SolutionDefines.targets = SolutionDefines.targets
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{41B0BE7D-021F-4EB7-855F-FCACD2D62325}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19AA1B15-CA87-4ADF-9972-E319433391FD}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5BD015B4-9C4C-42BC-8165-88217AC7B822} = {41B0BE7D-021F-4EB7-855F-FCACD2D62325}
 	EndGlobalSection
 EndGlobal

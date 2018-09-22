@@ -1,20 +1,20 @@
 namespace KnockKnock.Api.Commands.Tests
 {
-#if (SUPPORTS_BIGINTEGER)
+#if !SUPPORTS_BIGINTEGER
     using System.Collections.Generic;
     using KnockKnockApi.Commands;
     using KnockKnockApi.Validators;
     using Shouldly;
     using Xunit;
     
-    public class FibonacciCommandValidatorTests
+    public class FibUlongCommandValidatorTests
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void FibonacciValidation(int n, bool expectedResult)
+        public void FibUlongValidation(int n, bool expectedResult)
         {
-            var validator = new FibonacciCommandValidator();
-            var result = validator.Validate(new FibonacciCommand {N = n});
+            var validator = new FibUlongCommandValidator();
+            var result = validator.Validate(new FibUlongCommand {N = n});
             result.IsValid.ShouldBe(expectedResult);
         }
 
@@ -26,7 +26,7 @@ namespace KnockKnock.Api.Commands.Tests
                 new object[] {1, true},
                 new object[] {2, true},
                 new object[] {50, true},
-                new object[] {1000, true},
+                new object[] {1000, false},
                 new object[] {1001, false}, //arbitrary cutoff at 1000
                 new object[] {9999, false},
                 new object[] {int.MaxValue, false},

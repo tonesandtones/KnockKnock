@@ -9,4 +9,6 @@
     <PackageReference Include="FluentValidation" Version="8.0.100" />
   </ItemGroup>
 
+  <Import Project="$(SolutionDir)SolutionDefines.targets" Condition="exists('$(SolutionDir)SolutionDefines.targets')" />
+
 </Project>

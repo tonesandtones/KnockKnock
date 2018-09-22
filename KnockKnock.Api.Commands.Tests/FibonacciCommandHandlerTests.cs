@@ -1,12 +1,13 @@
-using System.Collections.Generic;
-using System.Numerics;
-using KnockKnockApi.CommandHandlers;
-using KnockKnockApi.Commands;
-using Shouldly;
-using Xunit;
-
 namespace KnockKnock.Api.Commands.Tests
 {
+#if (SUPPORTS_BIGINTEGER)
+    using System.Collections.Generic;
+    using System.Numerics;
+    using KnockKnockApi.CommandHandlers;
+    using KnockKnockApi.Commands;
+    using Shouldly;
+    using Xunit;
+    
     public class FibonacciCommandHandlerTests
     {
         [Theory]
@@ -34,4 +35,5 @@ namespace KnockKnock.Api.Commands.Tests
                 new object[] {1000, BigInteger.Parse("43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875")},
             };
     }
+#endif
 }

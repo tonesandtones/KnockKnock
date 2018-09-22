@@ -14,4 +14,6 @@
     <ProjectReference Include="..\KnockKnock.Api.Commands\KnockKnock.Api.Commands.csproj" />
   </ItemGroup>
 
+  <Import Project="$(SolutionDir)SolutionDefines.targets" Condition="exists('$(SolutionDir)SolutionDefines.targets')" />
+
 </Project>
