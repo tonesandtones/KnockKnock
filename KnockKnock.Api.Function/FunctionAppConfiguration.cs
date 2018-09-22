@@ -17,7 +17,7 @@ namespace KnockKnock.Api.Function
             builder
                 .Setup((services, commands) =>
                 {
-//                    services.AddConfiguration();
+                    services.AddConfiguration();
 
 #if SUPPORTS_BIGINTEGER
                     commands.Register<FibonacciCommandHandler>();
@@ -30,6 +30,8 @@ namespace KnockKnock.Api.Function
                     services.AddTransient<IValidator<ReverseWordsCommand>, ReverseWordsCommandValidator>();
                     
                     commands.Register<TriangleTypeCommandHandler>();
+
+                    commands.Register<GetApiTokenCommandHandler>();
                 })
                 .AddFluentValidation()
                 .Authorization(auth => auth.AuthorizationDefault(AuthorizationTypeEnum.Anonymous))
@@ -43,6 +45,7 @@ namespace KnockKnock.Api.Function
                     )
                     .HttpRoute("/api/TriangleType", route => route.HttpFunction<TriangleTypeCommand>(HttpMethod.Get))
                     .HttpRoute("/api/ReverseWords", route => route.HttpFunction<ReverseWordsCommand>(HttpMethod.Get))
+                    .HttpRoute("/api/Token", route => route.HttpFunction<GetApiTokenCommand>(HttpMethod.Get))
                 )
                 .OpenApiEndpoint(openapi =>
                     openapi
