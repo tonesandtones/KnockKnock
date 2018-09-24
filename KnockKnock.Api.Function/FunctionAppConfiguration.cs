@@ -23,8 +23,8 @@ namespace KnockKnock.Api.Function
                     commands.Register<FibonacciCommandHandler>();
                     services.AddTransient<IValidator<FibonacciCommand>, FibonacciCommandValidator>();
 #else
-                    commands.Register<FibUlongCommandHandler>();
-                    services.AddTransient<IValidator<FibUlongCommand>, FibUlongCommandValidator>();
+                    commands.Register<FibLongCommandHandler>();
+                    services.AddTransient<IValidator<FibLongCommand>, FibLongCommandValidator>();
 #endif
                     commands.Register<ReverseWordsCommandHandler>();
                     services.AddTransient<IValidator<ReverseWordsCommand>, ReverseWordsCommandValidator>();
@@ -40,7 +40,7 @@ namespace KnockKnock.Api.Function
 #if SUPPORTS_BIGINTEGER
                     route => route.HttpFunction<FibonacciCommand>(HttpMethod.Get)
 #else
-                    route => route.HttpFunction<FibUlongCommand>(HttpMethod.Get)
+                    route => route.HttpFunction<FibLongCommand>(HttpMethod.Get)
 #endif
                     )
                     .HttpRoute("/api/TriangleType", route => route.HttpFunction<TriangleTypeCommand>(HttpMethod.Get))

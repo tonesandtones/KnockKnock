@@ -1,3 +1,5 @@
+using System;
+
 namespace KnockKnockApi.CommandHandlers
 {
 #if !SUPPORTS_BIGINTEGER
@@ -5,19 +7,27 @@ namespace KnockKnockApi.CommandHandlers
     using AzureFromTheTrenches.Commanding.Abstractions;
     using KnockKnockApi.Commands;
 
-    public class FibUlongCommandHandler : ICommandHandler<FibUlongCommand, ulong>
+    public class FibLongCommandHandler : ICommandHandler<FibLongCommand, long>
     {
-        public async Task<ulong> ExecuteAsync(FibUlongCommand command, ulong previousResult)
+        public async Task<long> ExecuteAsync(FibLongCommand command, long previousResult)
         {
             var n = command.N;
+
+            if (n < 0)
+            {
+                //see wikipedia for generalisation into the negative numbers
+                return (long)Math.Round(Math.Pow(-1, n+1)) * await (ExecuteAsync(new FibLongCommand {N = Math.Abs(n)}, 0));
+            }
+            
             switch (n)
             {
+                case 0: return 0;
                 case 1: return 1;
                 case 2: return 1;
                 default:
                 {
-                    ulong n_1 = 1; //f(n-1)
-                    ulong result = 2; //f(n)
+                    long n_1 = 1; //f(n-1)
+                    long result = 2; //f(n)
                     for (var i = 3; i < n; i++)
                     {
                         checked

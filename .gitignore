@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/KnockKnock.Api.Function/Properties/launchSettings.json
+/KnockKnock.Api.Function/Properties/PublishProfiles/knockknock-tones-api - Web Deploy.pubxml

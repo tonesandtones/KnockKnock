@@ -7,14 +7,14 @@ namespace KnockKnock.Api.Commands.Tests
     using Shouldly;
     using Xunit;
     
-    public class FibUlongCommandValidatorTests
+    public class FibLongCommandValidatorTests
     {
         [Theory]
         [MemberData(nameof(Data))]
         public void FibUlongValidation(int n, bool expectedResult)
         {
-            var validator = new FibUlongCommandValidator();
-            var result = validator.Validate(new FibUlongCommand {N = n});
+            var validator = new FibLongCommandValidator();
+            var result = validator.Validate(new FibLongCommand {N = n});
             result.IsValid.ShouldBe(expectedResult);
         }
 
