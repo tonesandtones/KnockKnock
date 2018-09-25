@@ -7,6 +7,8 @@
   <ItemGroup>
     <PackageReference Include="AzureFromTheTrenches.Commanding.Abstractions" Version="8.1.1" />
     <PackageReference Include="FluentValidation" Version="8.0.100" />
+    <PackageReference Include="FunctionMonkey" Version="0.14.0-beta000" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.7.2" />
   </ItemGroup>
 
   <Import Project="$(SolutionDir)SolutionDefines.targets" Condition="exists('$(SolutionDir)SolutionDefines.targets')" />

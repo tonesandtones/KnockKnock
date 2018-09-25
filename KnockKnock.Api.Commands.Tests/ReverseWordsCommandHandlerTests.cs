@@ -12,7 +12,7 @@ namespace KnockKnock.Api.Commands.Tests
         [MemberData(nameof(Data))]
         public void ReverseWords(string input, string expectedResult)
         {
-            var command = new ReverseWordsCommand() {Input = input};
+            var command = new ReverseWordsCommand() {Sentence = input};
             var result = new ReverseWordsCommandHandler().ExecuteAsync(command, null).GetAwaiter().GetResult();
             result.ShouldBe(expectedResult);
         }
@@ -21,17 +21,17 @@ namespace KnockKnock.Api.Commands.Tests
             new List<object[]>
             {
                 new object[] {"", ""},
-                new object[] {" ", " "},
-                new object[] {"  ", "  "},
+                new object[] {" ", ""},
+                new object[] {"  ", ""},
                 new object[] {"a", "a"},
                 new object[] {" a", " a"},
-                new object[] {"a ", "a "},
-                new object[] {" a ", " a "},
-                new object[] {"  a  ", "  a  "},
+                new object[] {"a ", "a"},
+                new object[] {" a ", " a"},
+                new object[] {"  a  ", "  a"},
                 new object[] {"ab", "ba"},
                 new object[] {"ab cd", "ba dc"},
                 new object[] {"ab     cd", "ba     dc"},
-                new object[] {"   ab     cd ", "   ba     dc "},
+                new object[] {"   ab     cd ", "   ba     dc"},
                 new object[] {"the quic^ brown fox jump$ over the lazy d0g!", "eht ^ciuq nworb xof $pmuj revo eht yzal !g0d"},
                 new object[] {@"¯\_(ツ)_/¯", @"¯/_)ツ(_\¯"},
             };

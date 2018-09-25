@@ -6,6 +6,7 @@ using FunctionMonkey.FluentValidation;
 using KnockKnockApi.CommandHandlers;
 using KnockKnockApi.Commands;
 using KnockKnockApi.Validators;
+using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KnockKnock.Api.Function
@@ -18,6 +19,7 @@ namespace KnockKnock.Api.Function
                 .Setup((services, commands) =>
                 {
                     services.AddConfiguration();
+                    services.AddTransient<TelemetryClient>(x => new TelemetryClient());
 
 #if SUPPORTS_BIGINTEGER
                     commands.Register<FibonacciCommandHandler>();
@@ -28,8 +30,9 @@ namespace KnockKnock.Api.Function
 #endif
                     commands.Register<ReverseWordsCommandHandler>();
                     services.AddTransient<IValidator<ReverseWordsCommand>, ReverseWordsCommandValidator>();
-                    
+
                     commands.Register<TriangleTypeCommandHandler>();
+                    services.AddTransient<IValidator<TriangleTypeCommand>, TriangleTypeValidator>();
 
                     commands.Register<GetApiTokenCommandHandler>();
                 })
@@ -51,7 +54,9 @@ namespace KnockKnock.Api.Function
                     openapi
                         .Title("KnockKnock Tones")
                         .Version("0.0.1")
-                        .UserInterface());
+                        .UserInterface())
+//                .OutputAuthoredSource(@"c:\projects\kkoutput")
+                ;
         }
     }
 }

@@ -11,7 +11,15 @@ namespace KnockKnockApi.CommandHandlers
     {
         public async Task<string> ExecuteAsync(ReverseWordsCommand command, string previousResult)
         {
-            var input = command.Input;
+            var input = command.Sentence;
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+
+            //yes the reference solution does this. End whitespace is trimmed, start whitespace is not
+            input = input.TrimEnd();
 
             //including a capturing group in the split regex causes the Regex#Split()
             //operation to keep the captured group in the output array
